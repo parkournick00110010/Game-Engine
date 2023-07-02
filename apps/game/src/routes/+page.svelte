@@ -1,7 +1,25 @@
-<script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+<script lang="ts">
+	import { Application, Sprite } from 'pixi.js';
+
+	import {onMount} from 'svelte'
+
+  onMount(() => {
+		const app = new Application({ width: 640, height: 360 });
+	
+		// @ts-ignore
+		document.getElementById('game')?.appendChild(app.view);
+
+		let sprite = Sprite.from('sprites/ship.png');
+
+		app.stage.addChild(sprite);
+
+		let elapsed = 0.0;
+		app.ticker.add((delta) => {
+			elapsed += delta;
+			sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
+		});
+  })
+
 </script>
 
 <svelte:head>
@@ -11,49 +29,8 @@
 
 <section>
 	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
+		Hello PixiJS
 	</h1>
 
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
+	<div id='game' />
 </section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
-</style>

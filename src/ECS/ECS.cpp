@@ -4,7 +4,7 @@
 
 int IComponent::nextId = 0;
 
-int Entity::GetId() const { return id; }
+unsigned int Entity::GetId() const { return id; }
 
 void System::AddEntityToSystem(Entity entity) { entities.push_back(entity); }
 
@@ -21,10 +21,14 @@ const Signature &System::GetComponentSignature() const {
 }
 
 Entity Registry::CreateEntity() {
-  int entityId = numEntities++;
+  unsigned int entityId = numEntities++;
 
   Entity entity(entityId);
   entitiesToBeAdded.insert(entity);
+
+  if (entityId >= entityComponentSignatures.size()) {
+    entityComponentSignatures.resize(entityId + 1);
+  }
 
   spdlog::info("Entity created with ID: " + std::to_string(entityId));
 
@@ -65,5 +69,8 @@ void Registry::AddEntityToSystems(Entity entity) {
 }
 
 void Registry::Update() {
-  // entitiesToBeAdded
+  for (auto entity : entitiesToBeAdded) {
+    AddEntityToSystems(entity);
+  }
+  entitiesToBeAdded.clear();
 }

@@ -2,6 +2,7 @@
 #include "../Components/RigidBodyComponent.h"
 #include "../Components/TransformComponent.h"
 #include "../ECS/ECS.h"
+#include "../Systems/MovementSystem.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <glm/glm.hpp>
@@ -19,14 +20,14 @@ Game::Game() {
 
 void
 Game::Setup() {
+  registry->AddSystem<MovementSystem>();
+
   Entity tank = registry->CreateEntity();
 
   tank.AddComponent<TransformComponent>(glm::vec2(10.0, 30.0),
                                         glm::vec2(1.0, 1.0), 0);
 
-  tank.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
-
-  tank.RemoveComponent<RigidBodyComponent>();
+  tank.AddComponent<RigidBodyComponent>(glm::vec2(10.0, 2.0));
 }
 
 void
@@ -42,6 +43,10 @@ Game::Update() {
   double deltaTime = (SDL_GetTicks() - millisecsPreviousFrame) / 1000.0;
 
   millisecsPreviousFrame = SDL_GetTicks();
+
+  registry->GetSystem<MovementSystem>().Update(deltaTime);
+
+  registry->Update();
 }
 
 void

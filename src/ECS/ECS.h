@@ -154,7 +154,7 @@ template <typename TSystem>
 TSystem &
 Registry::GetSystem() const {
   auto system = systems.find(std::type_index(typeid(TSystem)));
-  return dynamic_cast<TSystem &>(*system->second);
+  return *static_cast<TSystem *>(system->second.get());
 }
 
 template <typename T>

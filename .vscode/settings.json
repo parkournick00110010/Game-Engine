@@ -1,4 +1,6 @@
 {
+  "editor.formatOnSave": true,
+  "clang-format.executable": "/usr/bin/clang-format-15",
   "files.associations": {
     "*.json.liquid": "json",
     "*.yaml.liquid": "yaml",

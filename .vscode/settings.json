@@ -66,7 +66,12 @@
     "chrono": "cpp",
     "ratio": "cpp",
     "set": "cpp",
-    "typeindex": "cpp"
+    "typeindex": "cpp",
+    "condition_variable": "cpp",
+    "mutex": "cpp",
+    "semaphore": "cpp",
+    "stop_token": "cpp",
+    "thread": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

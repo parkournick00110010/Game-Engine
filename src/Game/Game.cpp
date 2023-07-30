@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "../Components/RigidBodyComponent.h"
+#include "../Components/TransformComponent.h"
 #include "../ECS/ECS.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -15,12 +17,20 @@ Game::Game() {
   spdlog::info("Game constructor called!");
 }
 
-void Game::Setup() {
+void
+Game::Setup() {
   Entity tank = registry->CreateEntity();
-  Entity truck = registry->CreateEntity();
+
+  tank.AddComponent<TransformComponent>(glm::vec2(10.0, 30.0),
+                                        glm::vec2(1.0, 1.0), 0);
+
+  tank.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
+
+  tank.RemoveComponent<RigidBodyComponent>();
 }
 
-void Game::Update() {
+void
+Game::Update() {
   if (FPS_LIMIT > 0) {
     int timeToWait =
         MILLISECS_PER_FRAME - (SDL_GetTicks() - millisecsPreviousFrame);
@@ -34,7 +44,8 @@ void Game::Update() {
   millisecsPreviousFrame = SDL_GetTicks();
 }
 
-void Game::Render() {
+void
+Game::Render() {
   SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
   SDL_RenderClear(renderer);
 
@@ -43,7 +54,8 @@ void Game::Render() {
 
 Game::~Game() { spdlog::info("Game destractor called!"); }
 
-void Game::Initialize() {
+void
+Game::Initialize() {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
     spdlog::critical("Error initializing SDL.");
     return;
@@ -51,8 +63,8 @@ void Game::Initialize() {
 
   SDL_DisplayMode displayMode;
   SDL_GetCurrentDisplayMode(0, &displayMode);
-  windowWidth = 800;  // displayMode.w;
-  windowHeight = 600; // displayMode.h;
+  windowWidth = 800;    // displayMode.w;
+  windowHeight = 600;   // displayMode.h;
 
   window =
       SDL_CreateWindow(NULL, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -78,7 +90,8 @@ void Game::Initialize() {
   isRunning = true;
 }
 
-void Game::Run() {
+void
+Game::Run() {
   Setup();
   while (isRunning) {
     ProcessInput();
@@ -87,7 +100,8 @@ void Game::Run() {
   }
 }
 
-void Game::ProcessInput() {
+void
+Game::ProcessInput() {
   SDL_Event sdlEvent;
   while (SDL_PollEvent(&sdlEvent)) {
     switch (sdlEvent.type) {
@@ -103,7 +117,8 @@ void Game::ProcessInput() {
   }
 }
 
-void Game::Destroy() {
+void
+Game::Destroy() {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();

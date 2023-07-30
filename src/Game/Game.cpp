@@ -1,8 +1,10 @@
 #include "Game.h"
 #include "../Components/RigidBodyComponent.h"
+#include "../Components/SpriteComponent.h"
 #include "../Components/TransformComponent.h"
 #include "../ECS/ECS.h"
 #include "../Systems/MovementSystem.h"
+#include "../Systems/RenderSystem.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <glm/glm.hpp>
@@ -21,13 +23,19 @@ Game::Game() {
 void
 Game::Setup() {
   registry->AddSystem<MovementSystem>();
+  registry->AddSystem<RenderSystem>();
 
   Entity tank = registry->CreateEntity();
-
   tank.AddComponent<TransformComponent>(glm::vec2(10.0, 30.0),
                                         glm::vec2(1.0, 1.0), 0);
+  tank.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 100.0));
+  tank.AddComponent<SpriteComponent>(30, 30);
 
-  tank.AddComponent<RigidBodyComponent>(glm::vec2(10.0, 2.0));
+  Entity truck = registry->CreateEntity();
+  truck.AddComponent<TransformComponent>(glm::vec2(10.0, 30.0),
+                                         glm::vec2(1.0, 1.0), 0);
+  truck.AddComponent<RigidBodyComponent>(glm::vec2(100.0, 0.0));
+  truck.AddComponent<SpriteComponent>(20, 20);
 }
 
 void
@@ -53,6 +61,8 @@ void
 Game::Render() {
   SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
   SDL_RenderClear(renderer);
+
+  registry->GetSystem<RenderSystem>().Update(renderer);
 
   SDL_RenderPresent(renderer);
 }

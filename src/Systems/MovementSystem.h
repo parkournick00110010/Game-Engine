@@ -14,18 +14,20 @@ public:
   }
   ~MovementSystem() = default;
 
-  void Update(double deltaTime) {
+  void Update(double deltaTime, bool debug = false) {
     for (auto entity : GetSystemEntities()) {
-      TransformComponent &transform = entity.GetComponent<TransformComponent>();
-      const RigidBodyComponent rigidbody =
-          entity.GetComponent<RigidBodyComponent>();
+      auto &transform = entity.GetComponent<TransformComponent>();
+      const auto rigidbody = entity.GetComponent<RigidBodyComponent>();
 
       transform.position.x += rigidbody.velocity.x * deltaTime;
       transform.position.y += rigidbody.velocity.y * deltaTime;
 
-      spdlog::info("entity id: " + std::to_string(entity.GetId()) +
-                   " position is now: " + std::to_string(transform.position.x) +
-                   ", " + std::to_string(transform.position.y));
+      if (debug) {
+        spdlog::info(
+            "entity id: " + std::to_string(entity.GetId()) +
+            " position is now: " + std::to_string(transform.position.x) + ", " +
+            std::to_string(transform.position.y));
+      }
     }
   }
 };

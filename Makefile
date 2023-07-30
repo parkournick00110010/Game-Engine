@@ -4,7 +4,8 @@ LANG_STD = -std=c++17
 COMPILER_FLAGS = -Wall -Wfatal-errors
 INCLUDE_PATH = -I"./libs/"
 SRC_FILES = src/*.cpp \
-						src/Game/*.cpp
+						src/Game/*.cpp \
+						src/ECS/*.cpp
 LINKER_FLAGS = -lspdlog \
 							 -lfmt -lSDL2 \
 							 -lSDL2_image \

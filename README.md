@@ -6,6 +6,7 @@
 - [sdl2](https://archlinux.org/packages/extra/x86_64/sdl2/)
 - lua5.3
 - C++ 17
+- [spdlog](https://github.com/gabime/spdlog)
 
 ### Debian based distros ( Like ubuntu )
 - build-essential
@@ -15,3 +16,4 @@
 - libsdl2-mixer-dev
 - liblua5.3-dev
 - C++ 17
+- [spdlog](https://github.com/gabime/spdlog)

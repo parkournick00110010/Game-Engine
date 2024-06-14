@@ -5,6 +5,7 @@
 - base-devel
 - [sdl2](https://archlinux.org/packages/extra/x86_64/sdl2/)
 - lua5.3
+- C++ 17
 
 ### Debian based distros ( Like ubuntu )
 - build-essential
@@ -13,3 +14,4 @@
 - libsdl2-ttf-dev
 - libsdl2-mixer-dev
 - liblua5.3-dev
+- C++ 17

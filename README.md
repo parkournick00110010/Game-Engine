@@ -4,6 +4,7 @@
 ### Arch based distros
 - base-devel
 - [sdl2](https://archlinux.org/packages/extra/x86_64/sdl2/)
+- lua5.3
 
 ### Debian based distros ( Like ubuntu )
 - build-essential

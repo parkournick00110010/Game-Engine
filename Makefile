@@ -11,8 +11,8 @@ LINKER_FLAGS = -lspdlog \
 							 -lSDL2_image \
 							 -lSDL2_ttf \
 							 -lSDL2_mixer \
-							 -llua5.3
-OUTPUT = fantasia
+							 -llua5.4
+OUTPUT = game-engine
 ##
 
 build:
